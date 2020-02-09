@@ -25,7 +25,7 @@ SECRET_KEY = '$18pw56ud-yahcvbi$3wuu)=!6#-6c7duk-m_t68f4n1m2v)n@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['fractal-plotter.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
