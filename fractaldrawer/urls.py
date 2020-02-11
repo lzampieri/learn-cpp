@@ -21,6 +21,7 @@ from . import views
 
 urlpatterns = [
     path('drawer/', include('drawer.urls')),
+    path('drawer2/', include('drawer2.urls')),
     path('admin/', admin.site.urls),
     path('', views.index, name='index')
 ]

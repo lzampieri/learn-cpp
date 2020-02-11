@@ -32,6 +32,8 @@ ALLOWED_HOSTS = ['fractal-plotter.herokuapp.com', '127.0.0.1']
 
 INSTALLED_APPS = [
     'drawer',
+    'drawer2',
+    'fractaldrawer',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
