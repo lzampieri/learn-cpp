@@ -10,3 +10,5 @@ A repository in which a cpp crash course is developed
 ## Run info
 npm start
 http://localhost:3000/
+
+npm dev
