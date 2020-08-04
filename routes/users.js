@@ -31,7 +31,7 @@ passport.use(new LocalStrategy({
 
 //renders register view
 router.get('/register', function(req, res, next) {
-    res.render('register', { title: "Sign Up" });
+    res.render('users\\register', { title: "Sign Up" });
 });
 
 // handles register POST called from register javascript
@@ -65,7 +65,7 @@ router.post('/register', async function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-    res.render('login', { title: "Sign In" });
+    res.render('users\\login', { title: "Sign In" });
 });
   
 router.post('/login', function(req, res, next) {

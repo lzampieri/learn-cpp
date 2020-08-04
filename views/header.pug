@@ -1,14 +1,20 @@
 nav(class='navbar navbar-expand-lg navbar-dark bg-primary d-flex')
   a(class='navbar-brand' href='/') Learn Cpp
-  != '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>'
-  != '<div class="collapse navbar-collapse" id="navbarNavAltMarkup">'
-  div(class='navbar-nav')
+  != '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>'
+  != '<div class="collapse navbar-collapse" id="navbar">'
+  div.navbar-nav.mr-auto
     a(class=(current_url.includes('exercises')?'nav-item nav-link active':'nav-item nav-link') href='/exercises') Exercises
     a(class=(current_url.includes('fractal')?'nav-item nav-link active':'nav-item nav-link') href='/fractal') Fractals
-  div(class='navbar-nav flex-row ml-md-auto')
+    if userrole
+      if userrole.includes('admin')
+        div.nav-item.dropdown
+          a.nav-link.dropdown-toggle(href='#' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")#navbarDropdown Administration
+          div.dropdown-menu.bg-info(aria-labelledby="navbarDropdown")
+            a.nav-item.nav-link(href='/admin/users') Manage users
+  div.navbar-nav
     if user_id
       a.nav-item.nav-link.active= username
-      a(class='btn btn-info' href='/users/logout') Logout
+      a.btn.btn-info(href='/users/logout') Logout
     else
       a(class=(current_url.includes('login')?'nav-item nav-link active':'nav-item nav-link') href='/users/login') Login
       a(class=(current_url.includes('register')?'nav-item nav-link active':'nav-item nav-link') href='/users/register') Sign Up
