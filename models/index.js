@@ -22,16 +22,13 @@ const sequelize = new Sequelize(
 //   Exercise: sequelize.import('./exercises')
 // };
 
-const models = {
-  Exercise: require('./exercises')(sequelize,Sequelize)
-};
- 
-Object.keys(models).forEach(key => {
-  if ('associate' in models[key]) {
-    models[key].associate(models);
-  }
-});
- 
-// module.exports = models, { sequelize };
+require('./exercises')(sequelize,Sequelize);
+require('./users')(sequelize,Sequelize);
 
-module.exports = {models: models, sequelize: sequelize};
+// Object.keys(models).forEach(key => {
+//   if ('associate' in models[key]) {
+//     models[key].associate(models);
+//   }
+// });
+ 
+module.exports = sequelize;
