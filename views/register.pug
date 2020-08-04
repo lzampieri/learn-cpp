@@ -1,8 +1,9 @@
 extends layout
 
 block content
-  h2 Sign In
-  form(onsubmit="return false;" class='col-6 m-3')#loginModal
+  h2 Sign up
+  form(onsubmit="return false;" class='col-6 m-3')#registerModal
+    div.alert.alert-success(style="display:none;")#ok_message
     div.alert.alert-danger(style="display:none;")#err_message
     div(class='form-group')
       label(for="username") Username
@@ -14,18 +15,18 @@ block content
     span.spinner-grow.text-primary(style="display:none;")#spinner
 
   script.
-    $('#loginModal').submit(function() {
+    $('#registerModal').submit(function() {
       $('#spinner').show();
       $('#err_message').hide();
       $('#ok_message').hide();
-      $.post('/users/login', {
+      $.post('/users/register', {
         username: $('#username').val(),
         password: $('#password').val()
       }, function(resp) {
         if (resp.status == 'error') {
           $('#err_message').text(resp.message).show();
         } else {
-          window.location.href = "/";
+        $('#ok_message').text("Successfully signed up. Before logging in, you must wait for administrator confirmation of the account.").show();
         }
       })
       $('#spinner').hide();
