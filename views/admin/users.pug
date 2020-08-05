@@ -1,21 +1,31 @@
-extends layout
+extends ../layout
 
 block content
     table(class='table table-hover')
         thead
-            tr
+            tr.row
                 th(class='col') Username
-                th(class='col-1') Role
-                th(class='col-1') Actions
+                th(class='col-4') Role
+                    span.spinner-border.spinner-border-sm.mx-2.text-primary(style="display:none;")#spinner
         tbody
-            each users in uslist
-                tr
-                    td= user.username
-                    td= user.role
-                    td
-                        if(user.role)
-                        a(class='btn btn-primary' onClick='updRole(') Testo
-                    td
-                        a(class='btn btn-primary' href='/exercises/'+ex.short_title+'/app') App
-                    td
-                        a(class='btn btn-primary' href='/exercises/'+ex.short_title+'/sol') Soluzione
+            each user in users
+                tr.row
+                    td.col= user.username
+                    td.col-4
+                        if user.username != username
+                            a.btn.btn-danger(onClick='setRole('+user.id+',\'inactive\')' class=(user.role.includes('inactive')?'disabled':'')) Inactive
+                            a.btn.btn-primary(onClick='setRole('+user.id+',\'user\')' class=(user.role.includes('user')?'disabled':'')) User
+                            a.btn.btn-success(onClick='setRole('+user.id+',\'manager\')' class=(user.role.includes('manager')?'disabled':'')) Manager
+                            a.btn.btn-warning(onClick='setRole('+user.id+',\'admin\')' class=(user.role.includes('admin')?'disabled':'')) Admin
+                        else
+                            a.btn.btn-warning.disabled Admin
+    script.
+        function setRole(userid,role) {
+            $('#spinner').show();
+            $.post('/admin/users', {
+                role: role,
+                userid: userid
+            }, function(resp) {
+                location.reload();
+            })
+        }

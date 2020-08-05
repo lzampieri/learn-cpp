@@ -1,7 +1,7 @@
 var express = require('express');
 const { route } = require('./users');
 var router = express.Router();
-var models = require('../models').models;
+var models = require('../models');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,7 +13,7 @@ router.get('/fractal', function(req, res, next) {
 });
 
 router.get('/exercises', function(req, res, next) {
-  models.exercise.findAll().then(exlist => res.render('exercises',{ exlist: exlist, title: "Exercises" }));
+  models.exercises.findAll().then(exlist => res.render('exercises',{ exlist: exlist, title: "Exercises" }));
 });
 
 module.exports = router;

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             is: /^[0-9a-zA-Z]{12}$/i
         },
         role: {
-            type: DataTypes.ENUM('admin','user','inactive')
+            type: DataTypes.ENUM('admin','manager','user','inactive')
         },
         password: {
             type: DataTypes.STRING(64),
