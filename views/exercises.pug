@@ -1,22 +1,48 @@
 extends layout
 
 block content
+    div.row.align-items-center
+        h1.col-6 Exercises
+        span.spinner-border.mx-2.text-primary(style="display:none;")#spinner
+        if canmanage
+            div.col.text-right
+                a.btn.btn-primary(href='/management/addex') + New
     table(class='table table-hover')
         thead
             tr
-                th(class='col') Titolo
-                th(class='col-1') Difficoltà
-                th(class='col-1') Testo
-                th(class='col-1') App
-                th(class='col-1') Soluzione
+                th(class='col') Title
+                th(class='col-1') Hardness
+                th(class='col-1') Text
+                th(class='col-1') Apps
+                th(class='col-1') Solution
+                if canmanage
+                    th(class='col-1') Visible
         tbody
             each ex in exlist
-                tr
-                    td= ex.title
-                    td= ex.hardness
-                    td
-                        a(class='btn btn-primary' href='/exercises/'+ex.short_title+'/text') Testo
-                    td
-                        a(class='btn btn-primary' href='/exercises/'+ex.short_title+'/app') App
-                    td
-                        a(class='btn btn-primary' href='/exercises/'+ex.short_title+'/sol') Soluzione
+                if ( ex.active || canmanage )
+                    tr
+                        td= ex.title
+                        td= ex.hardness
+                        td
+                            a(class='btn btn-primary' href='/exercises/'+ex.id+'/text') Testo
+                        td
+                            a(class='btn btn-primary' href='/exercises/'+ex.id+'/app') App
+                        td
+                            a(class='btn btn-primary' href='/exercises/'+ex.id+'/sol') Soluzione
+                        if canmanage
+                            td
+                                if ex.active
+                                    a.btn.btn-primary(href='#' onClick='setActive('+ex.id+',0)') On
+                                else
+                                    a.btn.btn-danger(href='#' onClick='setActive('+ex.id+',1)') Off
+
+    script.
+        function setActive(exid,active) {
+            $('#spinner').show();
+            $.post('/management/exactivation', {
+                exid: exid,
+                active: active
+            }, function(resp) {
+                location.reload();
+            })
+        }

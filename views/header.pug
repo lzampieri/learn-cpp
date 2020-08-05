@@ -6,6 +6,12 @@ nav(class='navbar navbar-expand-lg navbar-dark bg-primary d-flex')
     a(class=(current_url.includes('exercises')?'nav-item nav-link active':'nav-item nav-link') href='/exercises') Exercises
     a(class=(current_url.includes('fractal')?'nav-item nav-link active':'nav-item nav-link') href='/fractal') Fractals
     if userrole
+      if canmanage
+        div.nav-item.dropdown
+          a.nav-link.dropdown-toggle(href='#' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")#navbarDropdown2 Management
+          div.dropdown-menu.bg-info(aria-labelledby="navbarDropdown")
+            a.nav-item.nav-link(href='/management/applications') Manage apps
+    if userrole
       if userrole.includes('admin')
         div.nav-item.dropdown
           a.nav-link.dropdown-toggle(href='#' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")#navbarDropdown Administration

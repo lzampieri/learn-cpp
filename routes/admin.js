@@ -24,8 +24,6 @@ router.post('/users', async function(req, res, next) {
     } catch(err) {
       console.log(err);
     }
-    console.log(userid);
-    console.log(newrole);
     res.json({status: 'ok'});
   }
 });

@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  div.row.align-items-center
+    h1.col-6 New exercise
+    p.col-1.text-rigth
+      span.spinner-border.text-primary(style="display:none;")#spinner
+  form(onsubmit="return false;" class='col-6 m-3')#appModal
+    div.alert.alert-danger(style="display:none;")#err_message
+    div(class='form-group')
+      label(for="title") Title
+      input(type="text" class='form-control' name='title')#title
+    div(class='form-group')
+      label(for="hardness") Hardness (from 1 to 5)
+      input(type="int" class='form-control' name='hardness')#hardness
+    button(type='submit' class='btn btn-primary') Save
+
+  script.
+    $('#appModal').submit(function() {
+      $('#spinner').show();
+      $('#err_message').hide();
+      $.post('/management/addex', {
+        title: $('#title').val(),
+        hardness: $('#hardness').val()
+      }, function(resp) {
+        if (resp.status == 'error') {
+          $('#err_message').text(resp.message).show();
+        } else {
+          window.location.href = "/exercises";
+        }
+      })
+      $('#spinner').hide();
+    });

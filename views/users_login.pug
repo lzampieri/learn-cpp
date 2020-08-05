@@ -1,7 +1,10 @@
 extends layout
 
 block content
-  h2 Sign In
+  div.row.align-items-center
+    h1.col-6 Sign In
+    p.col-1.text-rigth
+      span.spinner-border.text-primary(style="display:none;")#spinner
   form(onsubmit="return false;" class='col-6 m-3')#loginModal
     div.alert.alert-danger(style="display:none;")#err_message
     div(class='form-group')
@@ -11,13 +14,11 @@ block content
       label(for="password") Password
       input(type="password" class='form-control' name='password')#password
     button(type='submit' class='btn btn-primary') Login
-    span.spinner-grow.text-primary(style="display:none;")#spinner
 
   script.
     $('#loginModal').submit(function() {
       $('#spinner').show();
       $('#err_message').hide();
-      $('#ok_message').hide();
       $.post('/users/login', {
         username: $('#username').val(),
         password: $('#password').val()

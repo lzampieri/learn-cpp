@@ -11,8 +11,9 @@ var cookie_secret = "polloarrosto";
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
+var managementRouter = require('./routes/management');
 
-var sequelize = require('./models').sequelize;
+var models = require('./models');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use(function(req,res,next) {
     res.locals.user_id = req.user.id;
     res.locals.username = req.user.username;
     res.locals.userrole = req.user.role;
+    res.locals.canmanage = models.users.canmanage(req.user.role);
   }
   res.locals.current_url = req.url;
   next();
@@ -65,6 +67,7 @@ app.use(function(req,res,next) {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
+app.use('/management', managementRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -83,6 +86,6 @@ app.use(function(err, req, res, next) {
 });
 
 // database connection
-sequelize.sync();
+models.sequelize.sync();
 
 module.exports = app;
