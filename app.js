@@ -10,9 +10,9 @@ var cookie_secret = "polloarrosto";
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var adminRouter = require('./routes/admin');
 
-//var models, { sequelize }  = require('./models')
-var sequelize = require('./models');
+var sequelize = require('./models').sequelize;
 
 var app = express();
 
@@ -21,28 +21,50 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser(cookie_secret));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser(cookie_secret));
-app.use(express.static(path.join(__dirname, 'public')));
+
+var session = require("express-session");
+var passport = require('passport');
+
+var expireDate = new Date();
+expireDate.setDate(expireDate.getDate() + 1);
 
 app.use(session({
-  secret: cookie_secret,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {secure: true}
+  resave: true,
+  saveUninitialized: true,
+  secret: process.env.SESSIONSDB_SECRET,
+  cookie: { expires: expireDate }
 }));
 
-app.use((req, res, next) => {
-  if (req.cookies.user_sid && !req.session.user) {
-      res.clearCookie('user_sid');
-      console.log("Deleted old session");
-  }
-  next();
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, done) {
+  done(null, {id: user.id, username: user.username, role: user.role});
 });
+
+passport.deserializeUser(function(user, done) {
+  done(null, {id: user.id, username: user.username, role: user.role});
+});
+
+app.use(function(req,res,next) {
+  if(req.user) {
+    res.locals.user_id = req.user.id;
+    res.locals.username = req.user.username;
+    res.locals.userrole = req.user.role;
+  }
+  res.locals.current_url = req.url;
+  next();
+})
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
