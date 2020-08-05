@@ -21,8 +21,8 @@ block content
             each ex in exlist
                 if ( ex.active || canmanage )
                     tr
-                        td= ex.title
-                        td= ex.hardness
+                        td.align-middle= ex.title
+                        td.align-middle= ex.hardness
                         td
                             a(class='btn btn-primary' href='/exercises/'+ex.id+'/text') Testo
                         td

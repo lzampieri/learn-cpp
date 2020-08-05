@@ -7,15 +7,7 @@ router.get('/', function(req, res, next) {
   res.redirect('/');
 });
 
-router.get('/applications', async function(req, res, next) {
-  if(req.user && models.users.canmanage(req.user.role) ) {
-    var applications = await models.applications.findAll( { order: [ ['name', 'ASC' ]]});
-    res.render('management_applications', { title: "Application manager", applications: applications });
-  }
-  else res.redirect('/');
-});
-
-router.post('/applications', async function(req, res, next) {
+router.post('/appactivation', async function(req, res, next) {
   if(req.user && models.users.canmanage(req.user.role) ) {
     var appid = req.body.appid;
     var active = req.body.active;
