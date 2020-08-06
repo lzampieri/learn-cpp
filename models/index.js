@@ -11,6 +11,7 @@ const sequelize = new Sequelize(
 
 const models = {
   sequelize: sequelize,
+  applications: require('./applications')(sequelize,Sequelize),
   exercises: require('./exercises')(sequelize,Sequelize),
   users: require('./users')(sequelize,Sequelize)
 }

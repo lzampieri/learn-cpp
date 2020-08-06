@@ -1,0 +1,41 @@
+extends layout
+
+block content
+    div.row.align-items-center
+        h1.col-6 Applications
+        span.spinner-border.mx-2.text-primary(style="display:none;")#spinner
+        if canmanage
+            div.col.text-right
+                a.btn.btn-primary(href='/management/addapp') + New
+    table(class='table table-hover')
+        thead
+            tr.row
+                th.col Name
+                th.col Go to
+                if canmanage
+                    th.col-1 Active
+        tbody
+            each app in applist
+                if ( app.active || canmanage )
+                    tr.row
+                        td.col= app.name
+                        td.col
+                            a.btn.btn-primary(href=app.url) =>
+                        if canmanage
+                            td.col-1
+                                if app.active
+                                    a.btn.btn-primary(href='#' onClick='setActive('+app.id+',0)') On
+                                else
+                                    a.btn.btn-danger(href='#' onClick='setActive('+app.id+',1)') Off
+
+        
+    script.
+        function setActive(appid,active) {
+            $('#spinner').show();
+            $.post('/management/appactivation', {
+                appid: appid,
+                active: active
+            }, function(resp) {
+                location.reload();
+            })
+        }

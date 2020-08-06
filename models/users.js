@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             is: /^[0-9a-zA-Z]{12}$/i
         },
         role: {
-            type: DataTypes.ENUM('admin','manager','user','inactive')
+            type: DataTypes.STRING(10) // ('admin','manager','user','inactive')
         },
         password: {
             type: DataTypes.STRING(64),
@@ -52,5 +52,10 @@ module.exports = (sequelize, DataTypes) => {
     user.prototype.validPassword = function(test_password) {
         return this.password == user.encryptPassword(this.seed, test_password);
     }
+    
+    user.canmanage = function(role) {
+        return role == 'admin' || role == 'manager';
+    }
+
     return user;
 };

@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 router.get('/users', async function(req, res, next) {
   if(req.user && req.user.role == 'admin') {
     var users = await models.users.findAll( { order: [ ['username', 'ASC' ]]});
-    res.render('admin//users', { title: "Users manager", users: users });
+    res.render('admin_users', { title: "Users manager", users: users });
   }
   else res.redirect('/');
 });
@@ -24,8 +24,6 @@ router.post('/users', async function(req, res, next) {
     } catch(err) {
       console.log(err);
     }
-    console.log(userid);
-    console.log(newrole);
     res.json({status: 'ok'});
   }
 });

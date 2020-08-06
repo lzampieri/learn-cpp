@@ -1,6 +1,9 @@
-extends ../layout
+extends layout
 
 block content
+    div.row.align-items-center
+        h1.col-6 Users
+        span.spinner-border.mx-2.text-primary(style="display:none;")#spinner
     table(class='table table-hover')
         thead
             tr.row
@@ -13,10 +16,10 @@ block content
                     td.col= user.username
                     td.col-4
                         if user.username != username
-                            a.btn.btn-danger(onClick='setRole('+user.id+',\'inactive\')' class=(user.role.includes('inactive')?'disabled':'')) Inactive
-                            a.btn.btn-primary(onClick='setRole('+user.id+',\'user\')' class=(user.role.includes('user')?'disabled':'')) User
-                            a.btn.btn-success(onClick='setRole('+user.id+',\'manager\')' class=(user.role.includes('manager')?'disabled':'')) Manager
-                            a.btn.btn-warning(onClick='setRole('+user.id+',\'admin\')' class=(user.role.includes('admin')?'disabled':'')) Admin
+                            a.btn.btn-danger(href='#' onClick='setRole('+user.id+',\'inactive\')' class=(user.role.includes('inactive')?'disabled':'')) Inactive
+                            a.btn.btn-primary(href='#' onClick='setRole('+user.id+',\'user\')' class=(user.role.includes('user')?'disabled':'')) User
+                            a.btn.btn-success(href='#' onClick='setRole('+user.id+',\'manager\')' class=(user.role.includes('manager')?'disabled':'')) Manager
+                            a.btn.btn-warning(href='#' onClick='setRole('+user.id+',\'admin\')' class=(user.role.includes('admin')?'disabled':'')) Admin
                         else
                             a.btn.btn-warning.disabled Admin
     script.
