@@ -38,7 +38,7 @@ expireDate.setDate(expireDate.getDate() + 1);
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: process.env.SESSIONSDB_SECRET,
+  secret: "codicesegretissimo",
   cookie: { expires: expireDate }
 }));
 
