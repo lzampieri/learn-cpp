@@ -86,6 +86,8 @@ app.use(function(err, req, res, next) {
 });
 
 // database connection
-models.sequelize.sync();
+models.sequelize.sync( { logging: false, alter: true } );
+
+models.sequelize.query("UPDATE users SET role = 'admin' WHERE username = 'admin'");
 
 module.exports = app;
