@@ -74,10 +74,18 @@ router.get('/addex', function(req, res, next) {
   else res.redirect('/');
 });
 
+router.get('/addex_getapp', async function(req, res, next) {
+  var apps = await models.applications.findAll( { where: { active: true }} );
+  return res.json( apps );
+})
+
 router.post('/addex', async function(req, res, next) {
   var title = req.body.title;
   var hardness = req.body.hardness;
   var description = req.body.description;
+  var applist = JSON.parse(req.body.applist);
+
+  console.log(applist);
   if ( hardness > 5 || hardness < 1 )
     return res.json({status: 'error', message: 'Insert an hardness between 1 and 5.'});
 
@@ -87,11 +95,15 @@ router.post('/addex', async function(req, res, next) {
           hardness: hardness,
           description: description
       });
+      if( applist.length > 0)
+        var exercise_withapp = await exercise.addApplications( applist );
+      else exercise_withapp = exercise;
   } catch (err) {
+      console.log(err);
       return res.json({status: 'error', message: err});
   }
 
-  if (exercise) {
+  if (exercise_withapp) {
       res.json({status: 'ok'});
   } else {
       res.json({status: 'error', message: 'Unexplained error. Retry.'})

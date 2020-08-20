@@ -9,11 +9,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/exercises', function(req, res, next) {
-  models.exercises.findAll( {order: [ ['title', 'ASC' ]] }).then(exlist => res.render('exercises',{ exlist: exlist, title: "Exercises" }));
+  models.exercises.findAll( {order: [ ['createdAt', 'DESC' ]] }).then(exlist => res.render('exercises',{ exlist: exlist, title: "Exercises" }));
 });
 
 router.get('/applications', function(req, res, next) {
-  models.applications.findAll( {order: [ ['name', 'ASC' ]] }).then(applist => res.render('applications',{ applist: applist, title: "Applications" }));
+  models.applications.findAll( {order: [ ['createdAt', 'DESC' ]] }).then(applist => res.render('applications',{ applist: applist, title: "Applications" }));
 });
 
 module.exports = router;

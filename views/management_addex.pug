@@ -16,17 +16,26 @@ block content
     div(class='form-group')
       label(for="description") Description
       textarea(class="form-control" name="description" rows="5")#description
-    TODO AGGIUNGERE APP PICKER
+    div(class='form-group')
+      label Add applications
+      br
+      span.spinner-border.text-primary#appsspinner
+      h4#forApps
     button(type='submit' class='btn btn-primary') Save
 
   script.
     $('#appModal').submit(function() {
       $('#spinner').show();
       $('#err_message').hide();
+      var applist = [];
+      window.apps.forEach( function(app) {
+        if( app.checked ) applist.push(app.id);
+      })
       $.post('/management/addex', {
         title: $('#title').val(),
         hardness: $('#hardness').val(),
-        description: $('#description').val()
+        description: $('#description').val(),
+        applist: JSON.stringify(applist)
       }, function(resp) {
         if (resp.status == 'error') {
           $('#err_message').text(resp.message).show();
@@ -36,3 +45,32 @@ block content
       })
       $('#spinner').hide();
     });
+
+    window.onload =  function() {
+      $.get('/management/addex_getapp', null, function(resp) {
+        window.apps = []
+        resp.forEach( function(app) {
+          window.apps.push({ id: app.id, name: app.name, checked: false});
+          $('#forApps').append( "<span class=\"btn btn-secondary m-1\" onclick=\"check("+app.id+")\" id=\"app"+app.id+"\">"+app.name+"</span>" );
+        } );
+        $('#appsspinner').hide();
+      })
+    }
+
+    function check(appid) {
+      window.apps.forEach( function(app) {
+        if( app.id == appid ) {
+          var btnid = "#app"+appid;
+          console.log(btnid);
+          if( app.checked ) {
+            app.checked = false;
+            $(btnid).removeClass("btn-primary");
+            $(btnid).addClass("btn-secondary");
+          } else {
+            app.checked = true;
+            $(btnid).removeClass("btn-secondary");
+            $(btnid).addClass("btn-primary");
+          } 
+        }
+      })
+    }

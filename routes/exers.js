@@ -11,10 +11,11 @@ router.get('/:exid', async function(req, res, next) {
   if (exer == null) {
     return res.redirect('/exercises');
   }
-  console.log( await exer.countApplications() );
+  var apps = await exer.getApplications();
   return res.render('exers_index', {
     title: exer.title,
-    exer: exer
+    exer: exer,
+    apps: apps
   });
 });
 

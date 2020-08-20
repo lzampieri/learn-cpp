@@ -8,5 +8,8 @@ block content
     span.fa.fa-star( style=(exer.hardness >= 3 ? 'color:orange' : ''))
     span.fa.fa-star( style=(exer.hardness >= 4 ? 'color:orange' : ''))
     span.fa.fa-star( style=(exer.hardness >= 5 ? 'color:orange' : ''))
-  div.col.m-3
+  div.container
+    for app in apps
+      a.btn.btn-primary.m-1(href='/apps/'+app.id)= app.name
+  div.col.m-1
     = exer.description
