@@ -30,13 +30,18 @@ router.get('/addapp', function(req, res, next) {
 router.post('/addapp', async function(req, res, next) {
   var name = req.body.appname;
   var url = req.body.appurl;
+  var internal = req.body.internal;
+  var description = req.body.description;
 
   try {
       var application = await models.applications.create({
           name: name,
-          url: url
+          url: url,
+          internal: internal,
+          description: description
       });
   } catch (err) {
+      console.log(err);
       return res.json({status: 'error', message: 'Application name already exists.'});
   }
 
@@ -72,13 +77,15 @@ router.get('/addex', function(req, res, next) {
 router.post('/addex', async function(req, res, next) {
   var title = req.body.title;
   var hardness = req.body.hardness;
+  var description = req.body.description;
   if ( hardness > 5 || hardness < 1 )
     return res.json({status: 'error', message: 'Insert an hardness between 1 and 5.'});
 
   try {
       var exercise = await models.exercises.create({
           title: title,
-          hardness: hardness
+          hardness: hardness,
+          description: description
       });
   } catch (err) {
       return res.json({status: 'error', message: err});

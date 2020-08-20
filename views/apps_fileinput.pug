@@ -1,12 +1,11 @@
 extends layout
 
 block content
-  div.row.align-items-center
-    h1.col-5 Application
-    p.col-1.text-right
-      span.spinner-border.text-primary(style="display:none;")#spinner
-
-  form(action="/apps" method="post" class='col-6 m-3' encType="multipart/form-data")#fileModal
+  h1= appname
+  span.spinner-border.text-primary.m-3(style="display:none;")#spinner
+  div.col.m-3
+    = description
+  form(method="post" class='col-6 m-3' encType="multipart/form-data")#fileModal
     if errmessage
       div.alert.alert-danger= errmessage
     div(class='form-group')

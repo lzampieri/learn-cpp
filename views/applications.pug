@@ -11,16 +11,21 @@ block content
         thead
             tr.row
                 th.col Name
-                th.col Go to
+                th.col-1 Go to
                 if canmanage
                     th.col-1 Active
         tbody
             each app in applist
                 if ( app.active || canmanage )
                     tr.row
-                        td.col= app.name
                         td.col
-                            a.btn.btn-primary(href=app.url) =>
+                            if app.internal
+                                span.badge.badge-success Int 
+                            else
+                                span.badge.badge-danger Ext 
+                            = " "+app.name
+                        td.col-1
+                            a.btn.btn-primary(href="/apps/"+app.id) Go!
                         if canmanage
                             td.col-1
                                 if app.active

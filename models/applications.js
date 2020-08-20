@@ -5,8 +5,14 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
+        description: {
+            type: DataTypes.STRING
+        },
         url: {
             type: DataTypes.STRING,
+        },
+        internal: {
+            type: DataTypes.BOOLEAN,
         },
         active: {
             type: DataTypes.BOOLEAN,

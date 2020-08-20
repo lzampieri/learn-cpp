@@ -17,4 +17,6 @@ const models = {
   users: require('./users')(sequelize,Sequelize)
 }
 
+models.exercises.hasMany(models.applications);
+
 module.exports = models;

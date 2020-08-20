@@ -2,5 +2,5 @@ extends layout
 
 block content
   div.row.align-items-center
-    h1.col-6 Application - Graphic result
+    h1.col-6= appname + " - Graphic result"
   img(alt='plot', src='data:image/png;base64,'+src)

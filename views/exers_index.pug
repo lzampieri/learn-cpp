@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= exer.title
+  div.container
+    span.fa.fa-star( style=(exer.hardness >= 1 ? 'color:orange' : ''))
+    span.fa.fa-star( style=(exer.hardness >= 2 ? 'color:orange' : ''))
+    span.fa.fa-star( style=(exer.hardness >= 3 ? 'color:orange' : ''))
+    span.fa.fa-star( style=(exer.hardness >= 4 ? 'color:orange' : ''))
+    span.fa.fa-star( style=(exer.hardness >= 5 ? 'color:orange' : ''))
+  div.col.m-3
+    = exer.description

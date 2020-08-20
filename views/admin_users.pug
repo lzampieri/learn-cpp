@@ -8,12 +8,14 @@ block content
         thead
             tr.row
                 th(class='col') Username
-                th(class='col-4') Role
+                th(class='col-1') Role
+                th(class='col-4') Promote/Downgrade
                     span.spinner-border.spinner-border-sm.mx-2.text-primary(style="display:none;")#spinner
         tbody
             each user in users
                 tr.row
-                    td.col= user.username
+                    td.col.align-middle= user.username
+                    td.col-1.align-middle= user.role.charAt(0).toUpperCase() + user.role.slice(1)
                     td.col-4
                         if user.username != username
                             a.btn.btn-danger(href='#' onClick='setRole('+user.id+',\'inactive\')' class=(user.role.includes('inactive')?'disabled':'')) Inactive

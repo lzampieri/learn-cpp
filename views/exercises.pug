@@ -9,26 +9,25 @@ block content
                 a.btn.btn-primary(href='/management/addex') + New
     table(class='table table-hover')
         thead
-            tr
+            tr.row
                 th(class='col') Title
-                th(class='col-1') Hardness
-                th(class='col-1') Text
-                th(class='col-1') Apps
-                th(class='col-1') Solution
+                th(class='col-2') Hardness
+                th(class='col-1') Go to
                 if canmanage
                     th(class='col-1') Visible
         tbody
             each ex in exlist
                 if ( ex.active || canmanage )
-                    tr
-                        td.align-middle= ex.title
-                        td.align-middle= ex.hardness
-                        td
-                            a(class='btn btn-primary' href='/exercises/'+ex.id+'/text') Testo
-                        td
-                            a(class='btn btn-primary' href='/exercises/'+ex.id+'/app') App
-                        td
-                            a(class='btn btn-primary' href='/exercises/'+ex.id+'/sol') Soluzione
+                    tr.row
+                        td.col= ex.title
+                        td.col-2
+                            span.fa.fa-star( style=(ex.hardness >= 1 ? 'color:orange' : ''))
+                            span.fa.fa-star( style=(ex.hardness >= 2 ? 'color:orange' : ''))
+                            span.fa.fa-star( style=(ex.hardness >= 3 ? 'color:orange' : ''))
+                            span.fa.fa-star( style=(ex.hardness >= 4 ? 'color:orange' : ''))
+                            span.fa.fa-star( style=(ex.hardness >= 5 ? 'color:orange' : ''))
+                        td.col-1
+                            a.btn.btn-primary(href="/exers/"+ex.id) Go!
                         if canmanage
                             td
                                 if ex.active
