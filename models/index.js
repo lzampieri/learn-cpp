@@ -17,6 +17,7 @@ const models = {
   users: require('./users')(sequelize,Sequelize)
 }
 
-models.exercises.hasMany(models.applications);
+models.exercises.belongsToMany(models.applications, { through: 'ExercisesApplications' });
+models.applications.belongsToMany(models.exercises, { through: 'ExercisesApplications' });
 
 module.exports = models;
