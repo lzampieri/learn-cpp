@@ -15,7 +15,20 @@ block content
       input(type="int" class='form-control' name='hardness')#hardness
     div(class='form-group')
       label(for="description") Description
+      br
+      p.text-muted
+        | You can use \(\LaTeX\) syntax, remembering that math delimiters are 
+        code $$...$$ 
+        | and 
+        code \[...\] 
+        | for displayed mathematics, and 
+        code \(...\) 
+        | for in-line mathematics. Pay attention that 
+        code $...$ 
+        | is not supported.
       textarea(class="form-control" name="description" rows="5")#description
+    div(class='form-group') 
+      div.text-muted.bg-light.p-3.border.rounded#descrpreview
     div(class='form-group')
       label Add applications
       br
@@ -46,6 +59,18 @@ block content
       $('#spinner').hide();
     });
 
+    async function reloadMathJax() {
+      var newtext = $('#description').val();
+      if( newtext.length > 0 ) {
+        $('#descrpreview').show();
+        $('#descrpreview').text( newtext );
+        MathJax.typesetPromise().then( () => setTimeout( reloadMathJax, 500) );
+      } else {
+        $('#descrpreview').hide();
+        setTimeout( reloadMathJax, 500);
+      }
+    }
+
     window.onload =  function() {
       $.get('/management/addex_getapp', null, function(resp) {
         window.apps = []
@@ -55,6 +80,7 @@ block content
         } );
         $('#appsspinner').hide();
       })
+      setTimeout( reloadMathJax, 0);
     }
 
     function check(appid) {
