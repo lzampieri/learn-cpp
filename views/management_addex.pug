@@ -2,10 +2,10 @@ extends layout
 
 block content
   div.row.align-items-center
-    h1.col-6 New exercise
+    h1.col-md-6 New exercise
     p.col-1.text-rigth
       span.spinner-border.text-primary(style="display:none;")#spinner
-  form(onsubmit="return false;" class='col-6 m-3')#appModal
+  form(onsubmit="return false;" class='col-md-6 m-3')#appModal
     div.alert.alert-danger(style="display:none;")#err_message
     div(class='form-group')
       label(for="title") Title
@@ -30,25 +30,21 @@ block content
     div(class='form-group') 
       div.text-muted.bg-light.p-3.border.rounded#descrpreview
     div(class='form-group')
-      label Add applications
+      label(for="forApps") Add applications
       br
       span.spinner-border.text-primary#appsspinner
-      h4#forApps
+      select.form-control(name="forApps" multiple="multiple")#forApps
     button(type='submit' class='btn btn-primary') Save
 
   script.
     $('#appModal').submit(function() {
       $('#spinner').show();
       $('#err_message').hide();
-      var applist = [];
-      window.apps.forEach( function(app) {
-        if( app.checked ) applist.push(app.id);
-      })
       $.post('/management/addex', {
         title: $('#title').val(),
         hardness: $('#hardness').val(),
         description: $('#description').val(),
-        applist: JSON.stringify(applist)
+        applist: JSON.stringify($('#forApps').val())
       }, function(resp) {
         if (resp.status == 'error') {
           $('#err_message').text(resp.message).show();
@@ -73,30 +69,11 @@ block content
 
     window.onload =  function() {
       $.get('/management/addex_getapp', null, function(resp) {
-        window.apps = []
         resp.forEach( function(app) {
-          window.apps.push({ id: app.id, name: app.name, checked: false});
-          $('#forApps').append( "<span class=\"btn btn-secondary m-1\" onclick=\"check("+app.id+")\" id=\"app"+app.id+"\">"+app.name+"</span>" );
+          $('#forApps').append( "<option value=\""+app.id+"\">"+app.name+"</option>" );
         } );
+        $('#forApps').select2();
         $('#appsspinner').hide();
       })
       setTimeout( reloadMathJax, 0);
-    }
-
-    function check(appid) {
-      window.apps.forEach( function(app) {
-        if( app.id == appid ) {
-          var btnid = "#app"+appid;
-          console.log(btnid);
-          if( app.checked ) {
-            app.checked = false;
-            $(btnid).removeClass("btn-primary");
-            $(btnid).addClass("btn-secondary");
-          } else {
-            app.checked = true;
-            $(btnid).removeClass("btn-secondary");
-            $(btnid).addClass("btn-primary");
-          } 
-        }
-      })
     }
