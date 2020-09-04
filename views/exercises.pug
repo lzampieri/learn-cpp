@@ -7,33 +7,26 @@ block content
         if canmanage
             div.col.text-right
                 a.btn.btn-primary(href='/management/addex') + New
-    table(class='table table-hover')
-        thead
-            tr.row
-                th(class='col') Title
-                th(class='col-2') Hardness
-                th(class='col-1') Go to
-                if canmanage
-                    th(class='col-1') Visible
-        tbody
-            each ex in exlist
-                if ( ex.active || canmanage )
-                    tr.row
-                        td.col= ex.title
-                        td.col-2
-                            span.fa.fa-star( style=(ex.hardness >= 1 ? 'color:orange' : ''))
-                            span.fa.fa-star( style=(ex.hardness >= 2 ? 'color:orange' : ''))
-                            span.fa.fa-star( style=(ex.hardness >= 3 ? 'color:orange' : ''))
-                            span.fa.fa-star( style=(ex.hardness >= 4 ? 'color:orange' : ''))
-                            span.fa.fa-star( style=(ex.hardness >= 5 ? 'color:orange' : ''))
-                        td.col-1
-                            a.btn.btn-primary(href="/exers/"+ex.id) Go!
-                        if canmanage
-                            td
-                                if ex.active
-                                    a.btn.btn-primary(href='#' onClick='setActive('+ex.id+',0)') On
-                                else
-                                    a.btn.btn-danger(href='#' onClick='setActive('+ex.id+',1)') Off
+    div
+        table(class='table table-hover')
+            tbody
+                each ex in exlist
+                    if ( ex.active || canmanage )
+                        tr.row
+                            td.col
+                                if canmanage
+                                    span.m-1
+                                        if ex.active
+                                            a.btn.btm-sm.btn-primary(href='#' onClick='setActive('+ex.id+',0)') On
+                                        else
+                                            a.btn.btm-sm.btn-danger(href='#' onClick='setActive('+ex.id+',1)') Off
+                                a.no-blue-link(href="/exers/"+ex.id)
+                                    span.fa.fa-star( style=(ex.hardness >= 1 ? 'color:orange' : 'color:grey'))
+                                    span.fa.fa-star( style=(ex.hardness >= 2 ? 'color:orange' : 'color:grey'))
+                                    span.fa.fa-star( style=(ex.hardness >= 3 ? 'color:orange' : 'color:grey'))
+                                    span.fa.fa-star( style=(ex.hardness >= 4 ? 'color:orange' : 'color:grey'))
+                                    span.fa.fa-star( style=(ex.hardness >= 5 ? 'color:orange' : 'color:grey'))
+                                    = "  " + ex.title
 
     script.
         function setActive(exid,active) {

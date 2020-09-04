@@ -8,31 +8,23 @@ block content
             div.col.text-right
                 a.btn.btn-primary(href='/management/addapp') + New
     table(class='table table-hover')
-        thead
-            tr.row
-                th.col Name
-                th.col-1 Go to
-                if canmanage
-                    th.col-1 Active
         tbody
             each app in applist
                 if ( app.active || canmanage )
                     tr.row
                         td.col
-                            if app.internal
-                                span.badge.badge-success Int 
-                            else
-                                span.badge.badge-danger Ext 
-                            = " "+app.name
-                        td.col-1
-                            a.btn.btn-primary(href="/apps/"+app.id) Go!
-                        if canmanage
-                            td.col-1
-                                if app.active
-                                    a.btn.btn-primary(href='#' onClick='setActive('+app.id+',0)') On
+                            if canmanage
+                                span.m-1
+                                    if app.active
+                                        a.btn.btm-sm.btn-primary(href='#' onClick='setActive('+app.id+',0)') On
+                                    else
+                                        a.btn.btm-sm.btn-danger(href='#' onClick='setActive('+app.id+',1)') Off
+                            a.no-blue-link(href="/apps/"+app.id)
+                                if app.internal
+                                    span.badge.badge-success Int 
                                 else
-                                    a.btn.btn-danger(href='#' onClick='setActive('+app.id+',1)') Off
-
+                                    span.badge.badge-danger Ext 
+                                = " "+app.name
         
     script.
         function setActive(appid,active) {

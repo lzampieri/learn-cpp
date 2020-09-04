@@ -1,4 +1,8 @@
 .select2 {
     width:100%!important;
     }
-    
+.no-blue-link {
+    color:#000000 !important;
+    text-decoration:none !important;
+
+}    
