@@ -2,10 +2,10 @@ extends layout
 
 block content
   div.row.align-items-center
-    h1.col-6 Sign Up
+    h1.col-md-6 Sign Up
     p.col-1.text-rigth
       span.spinner-border.text-primary(style="display:none;")#spinner
-  form(onsubmit="return false;" class='col-6 m-3')#registerModal
+  form(onsubmit="return false;" class='col-md-6 m-3')#registerModal
     div.alert.alert-success(style="display:none;")#ok_message
     div.alert.alert-danger(style="display:none;")#err_message
     div(class='form-group')

@@ -2,10 +2,10 @@ extends layout
 
 block content
   div.row.align-items-center
-    h1.col-6 New application
+    h1.col-md-6 New application
     p.col-1.text-rigth
       span.spinner-border.text-primary(style="display:none;")#spinner
-  form(onsubmit="return false;" class='col-6 m-3')#appModal
+  form(onsubmit="return false;" class='col-md-6 m-3')#appModal
     div.alert.alert-danger(style="display:none;")#err_message
     div(class='form-group')
       label(for="name") Name

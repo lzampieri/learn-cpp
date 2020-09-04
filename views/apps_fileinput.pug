@@ -5,7 +5,7 @@ block content
   span.spinner-border.text-primary.m-3(style="display:none;")#spinner
   div.col.m-3
     = description
-  form(method="post" class='col-6 m-3' encType="multipart/form-data")#fileModal
+  form(method="post" class='col-md-6 m-3' encType="multipart/form-data")#fileModal
     if errmessage
       div.alert.alert-danger= errmessage
     div(class='form-group')
